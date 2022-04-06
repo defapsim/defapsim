@@ -5,7 +5,7 @@ import com.defapsim.infrastructure.devices.ApplicationHostDevice;
 import com.defapsim.infrastructure.devices.Device;
 import com.defapsim.infrastructure.devices.DeviceConfiguration;
 import com.defapsim.infrastructure.devices.DeviceCreator;
-import com.defapsim.infrastructure.devices.fognode.FogNodeCreator;
+import com.defapsim.infrastructure.devices.edgenode.EdgeNodeCreator;
 import com.defapsim.infrastructure.devices.clouddevice.CloudServerCreator;
 import com.defapsim.infrastructure.devices.enddevice.EndDeviceCreator;
 import com.defapsim.infrastructure.links.Link;
@@ -177,7 +177,7 @@ public class InfrastructureGenerator {
     private Integer popID = 1;
 
     final DeviceCreator endDeviceCreator = new EndDeviceCreator();
-    final FogNodeCreator fogNodeCreator = new FogNodeCreator();
+    final EdgeNodeCreator edgeNodeCreator = new EdgeNodeCreator();
     final CloudServerCreator cloudServerCreator = new CloudServerCreator();
 
     private DeviceConfiguration deviceConfiguration;
@@ -221,17 +221,17 @@ public class InfrastructureGenerator {
                 .withComputingPower(Float.MAX_VALUE)
                 .withProcessingSpeed(3.2F));
 
-        this.PoP1 = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("PoP " + popID++)
+        this.PoP1 = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("PoP " + popID++)
                 .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                 .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                 .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
 
-        this.PoP2 = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("PoP "+ popID++)
+        this.PoP2 = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("PoP "+ popID++)
                 .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                 .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                 .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
 
-        this.PoP3 = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("PoP "+ popID++)
+        this.PoP3 = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("PoP "+ popID++)
                 .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                 .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                 .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
@@ -240,7 +240,7 @@ public class InfrastructureGenerator {
                 HOME 1
          */
 
-        this.Box1 = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("Box " + boxID++)
+        this.Box1 = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("Box " + boxID++)
                 .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                 .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                 .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
@@ -255,12 +255,12 @@ public class InfrastructureGenerator {
                 HOME 2
          */
 
-        this.Box2 = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("Box " + boxID++)
+        this.Box2 = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("Box " + boxID++)
                 .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                 .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                 .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
 
-        this.Mobile1 = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("Mobile " + mobileID++)
+        this.Mobile1 = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("Mobile " + mobileID++)
                 .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                 .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                 .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
@@ -274,22 +274,22 @@ public class InfrastructureGenerator {
                 HOME 3
          */
 
-        this.Box3 = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("Box " + boxID++)
+        this.Box3 = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("Box " + boxID++)
                 .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                 .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                 .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
 
-        this.PC1 = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("PC "+ pcID++)
+        this.PC1 = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("PC "+ pcID++)
                 .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                 .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                 .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
 
-        this.Mobile2 = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("Mobile "+ mobileID++)
+        this.Mobile2 = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("Mobile "+ mobileID++)
                 .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                 .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                 .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
 
-        this.Mobile3 = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("Mobile "+ mobileID++)
+        this.Mobile3 = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("Mobile "+ mobileID++)
                 .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                 .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                 .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
@@ -343,7 +343,7 @@ public class InfrastructureGenerator {
         List<Device> tmp = new LinkedList<>();
 
         for(int i = 0; i < round; i++) {
-            ApplicationHostDevice Mobile = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("Mobile " + mobileID++)
+            ApplicationHostDevice Mobile = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("Mobile " + mobileID++)
                     .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                     .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                     .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
@@ -353,7 +353,7 @@ public class InfrastructureGenerator {
 
             Link.addUndirected(new LinkConfiguration().from(this.Box1).to(Mobile).withNameToFrom("LINK-" + linkID).withNameFromTo("LINK-" + linkID++).withLatencyFromTo(intervalDistributionBoxEndDeviceLink.getValue().floatValue()));
 
-            ApplicationHostDevice Mobile2 = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("Mobile "+ mobileID++)
+            ApplicationHostDevice Mobile2 = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("Mobile "+ mobileID++)
                     .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                     .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                     .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
@@ -363,7 +363,7 @@ public class InfrastructureGenerator {
 
             Link.addUndirected(new LinkConfiguration().from(this.Box2).to(Mobile2).withNameToFrom("LINK-" + linkID).withNameFromTo("LINK-" + linkID++).withLatencyFromTo(intervalDistributionBoxEndDeviceLink.getValue().floatValue()));
 
-            ApplicationHostDevice Mobile3 = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("Mobile "+ mobileID++)
+            ApplicationHostDevice Mobile3 = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("Mobile "+ mobileID++)
                     .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                     .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                     .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
@@ -395,7 +395,7 @@ public class InfrastructureGenerator {
         List<Device> tmp = new LinkedList<>();
 
         for(int i = 0; i < 197; i++) {
-            ApplicationHostDevice box = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("Box " + boxID++)
+            ApplicationHostDevice box = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("Box " + boxID++)
                     .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                     .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                     .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
@@ -436,7 +436,7 @@ public class InfrastructureGenerator {
         deviceList.add(this.PoP1);
 
         for(int i = 0; i < round; i++) {   //
-            ApplicationHostDevice upperPoP = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("PoP " + popID++)
+            ApplicationHostDevice upperPoP = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("PoP " + popID++)
                     .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                     .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                     .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
@@ -451,7 +451,7 @@ public class InfrastructureGenerator {
 
             // Create "j" lowerPoPs for one upperPoP
             for(int j = 0; j < 3; j++) { // 3
-                ApplicationHostDevice lowerPoP = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("PoP " + popID++)
+                ApplicationHostDevice lowerPoP = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("PoP " + popID++)
                         .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                         .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                         .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
@@ -464,12 +464,12 @@ public class InfrastructureGenerator {
                 // Houses per lowerPoP
                 for(int houses = 0; houses < 6; houses++) {
 
-                    ApplicationHostDevice box = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("Box " + boxID++)
+                    ApplicationHostDevice box = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("Box " + boxID++)
                             .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                             .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                             .withProcessingSpeed(intervalDistributionProcessingSpeed.getValue().floatValue()));
 
-                    ApplicationHostDevice pc = (ApplicationHostDevice) fogNodeCreator.register(deviceConfiguration.withIdentifier("PC " + this.pcID++)
+                    ApplicationHostDevice pc = (ApplicationHostDevice) edgeNodeCreator.register(deviceConfiguration.withIdentifier("PC " + this.pcID++)
                             .withMemory(Float.valueOf(intervalDistributionMemoryCapacity.getValue().intValue() * 2))
                             .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))
                             .withComputingPower(Float.valueOf(intervalDistributionComputingPowerCapacity.getValue().intValue() * 2))

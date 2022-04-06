@@ -1,4 +1,4 @@
-package com.defapsim.algorithms.decentral.fogdecap;
+package com.defapsim.algorithms.decentral.edgedecap;
 
 /**
  * A message which is sent between the auctioneer and the bidder on different devices

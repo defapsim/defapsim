@@ -1,4 +1,4 @@
-package com.defapsim.algorithms.decentral.fogdecap;
+package com.defapsim.algorithms.decentral.edgedecap;
 
 /**
  * The message types that can be sent between the devices

@@ -1,4 +1,4 @@
-package com.defapsim.algorithms.decentral.fogdecap;
+package com.defapsim.algorithms.decentral.edgedecap;
 
 import com.defapsim.application.Component;
 import com.defapsim.application.Connectable;
@@ -6,7 +6,7 @@ import com.defapsim.application.Connector;
 import com.defapsim.infrastructure.devices.ApplicationHostDevice;
 import com.defapsim.infrastructure.devices.enddevice.EndDevice;
 
-public class FogDecApFunctions {
+public class EdgeDecApFunctions {
 
     /**
      * The function that determines the contribution of a component on a device
@@ -73,8 +73,8 @@ public class FogDecApFunctions {
         componentRealHost_c_x.getComponents().add(c_a);
         componentRealHost_c_a.getComponents().remove(c_a);
 
-        Float contribution_1 = FogDecApFunctions.contribution(c_x, device);
-        Float contribution_2 = FogDecApFunctions.contribution(c_x, c_x.getHostDevice());
+        Float contribution_1 = EdgeDecApFunctions.contribution(c_x, device);
+        Float contribution_2 = EdgeDecApFunctions.contribution(c_x, c_x.getHostDevice());
 
         c_a.setHostDevice(componentRealHost_c_a);
         componentRealHost_c_x.getComponents().remove(c_a);

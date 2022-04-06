@@ -306,7 +306,7 @@ public class XLSExporter {
             this.add("Seed");
             this.add("ProblemInstance");
             this.add("Cloud servers");
-            this.add("Fog nodes");
+            this.add("Edge nodes");
             this.add("End devices");
             this.add("Components");
             this.add("AlgorithmType");
@@ -365,7 +365,7 @@ public class XLSExporter {
             row.createCell(cellPos).setCellValue(evaluation.getCloudServers());
             row.getCell(cellPos++).setCellStyle(inputCellStyle);
 
-            row.createCell(cellPos).setCellValue(evaluation.getFogNodes());
+            row.createCell(cellPos).setCellValue(evaluation.getEdgeNodes());
             row.getCell(cellPos++).setCellStyle(inputCellStyle);
 
             row.createCell(cellPos).setCellValue(evaluation.getEndDevices());

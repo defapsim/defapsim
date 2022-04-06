@@ -1,4 +1,4 @@
-package fogdecaptests;
+package edgedecaptests;
 
 import com.defapsim.application.Application;
 import com.defapsim.evaluation.problemInstancegenerator.ApplicationGenerator;
@@ -9,7 +9,7 @@ import com.defapsim.policies.domain.GlobalDomainPolicy;
 import com.defapsim.policies.domain.HopDomainPolicy;
 import com.defapsim.policies.initialplacement.InitialPlacementPolicy;
 import com.defapsim.policies.initialplacement.RandomInitialPlacementPolicy;
-import com.defapsim.simulations.FogDecApSimulation;
+import com.defapsim.simulations.EdgeDecApSimulation;
 import com.defapsim.simulations.Simulation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,14 +18,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 /**
- * In this test case, the FogDecAp algorithm was run with different domain policies in the same problem instance each time.
- * The problem instance is the problem instance from experiment 1. The following FogDecAp variants were tested:
- * FogDecAp with a 1-hop domain policy, 2-hop domain policy, 3-hop domain policy, global domain policy. It is tested
+ * In this test case, the EdgeDecAp algorithm was run with different domain policies in the same problem instance each time.
+ * The problem instance is the problem instance from experiment 1. The following EdgeDecAp variants were tested:
+ * EdgeDecAp with a 1-hop domain policy, 2-hop domain policy, 3-hop domain policy, global domain policy. It is tested
  * whether the application latency has improved or remained the same due to the placement, which was done by
- * the FogDecAp algorithm.
+ * the EdgeDecAp algorithm.
  */
 
-public class FogDecApEvaluationTest {
+public class EdgeDecApEvaluationTest {
 
     public static Infrastructure infrastructure;
     public static Application application;
@@ -48,93 +48,93 @@ public class FogDecApEvaluationTest {
     }
 
     @Test
-    void testFogDecApWith1HopDomainPolicy() {
+    void testEdgeDecApWith1HopDomainPolicy() {
 
-        // SIMULATION OF THE FogDecAp ALGORITHM 1 HOP DOMAIN
+        // SIMULATION OF THE EdgeDecAp ALGORITHM 1 HOP DOMAIN
         DomainPolicy domainPolicy = new HopDomainPolicy().withHops(1);
-        Simulation fogDecApSimulation = new FogDecApSimulation()
+        Simulation edgeDecApSimulation = new EdgeDecApSimulation()
                 .isBeingDebugged(false)
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
-        fogDecApSimulation.prepareSimulation();
-        fogDecApSimulation.startSimulation();
+        edgeDecApSimulation.prepareSimulation();
+        edgeDecApSimulation.startSimulation();
 
-        if(FogDecApSimulation.results.size() > 0) {
-            Float current = FogDecApSimulation.results.get(0);
-            for(int i = 1; i < FogDecApSimulation.results.size(); i++) {
-                assertThat(FogDecApSimulation.results.get(i), lessThanOrEqualTo(current + 0.1F));
-                current = FogDecApSimulation.results.get(i);
+        if(EdgeDecApSimulation.results.size() > 0) {
+            Float current = EdgeDecApSimulation.results.get(0);
+            for(int i = 1; i < EdgeDecApSimulation.results.size(); i++) {
+                assertThat(EdgeDecApSimulation.results.get(i), lessThanOrEqualTo(current + 0.1F));
+                current = EdgeDecApSimulation.results.get(i);
             }
         }
     }
 
     @Test
-    void testFogDecApWith2HopDomainPolicy() {
+    void testEdgeDecApWith2HopDomainPolicy() {
 
-        // SIMULATION OF THE FogDecAp ALGORITHM 2 HOP DOMAIN
+        // SIMULATION OF THE EdgeDecAp ALGORITHM 2 HOP DOMAIN
         DomainPolicy domainPolicy = new HopDomainPolicy().withHops(2);
-        Simulation fogDecApSimulation = new FogDecApSimulation()
+        Simulation edgeDecApSimulation = new EdgeDecApSimulation()
                 .isBeingDebugged(false)
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
-        fogDecApSimulation.prepareSimulation();
-        fogDecApSimulation.startSimulation();
+        edgeDecApSimulation.prepareSimulation();
+        edgeDecApSimulation.startSimulation();
 
-        if(FogDecApSimulation.results.size() > 0) {
-            Float current = FogDecApSimulation.results.get(0);
-            for(int i = 1; i < FogDecApSimulation.results.size(); i++) {
-                assertThat(FogDecApSimulation.results.get(i), lessThanOrEqualTo(current + 0.1F));
-                current = FogDecApSimulation.results.get(i);
+        if(EdgeDecApSimulation.results.size() > 0) {
+            Float current = EdgeDecApSimulation.results.get(0);
+            for(int i = 1; i < EdgeDecApSimulation.results.size(); i++) {
+                assertThat(EdgeDecApSimulation.results.get(i), lessThanOrEqualTo(current + 0.1F));
+                current = EdgeDecApSimulation.results.get(i);
             }
         }
     }
 
     @Test
-    void testFogDecApWith3HopDomainPolicy() {
+    void testEdgeDecApWith3HopDomainPolicy() {
 
-        // SIMULATION OF THE FogDecAp ALGORITHM 3 HOP DOMAIN
+        // SIMULATION OF THE EdgeDecAp ALGORITHM 3 HOP DOMAIN
         DomainPolicy domainPolicy = new HopDomainPolicy().withHops(3);
-        Simulation fogDecApSimulation = new FogDecApSimulation()
+        Simulation edgeDecApSimulation = new EdgeDecApSimulation()
                 .isBeingDebugged(false)
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
-        fogDecApSimulation.prepareSimulation();
-        fogDecApSimulation.startSimulation();
+        edgeDecApSimulation.prepareSimulation();
+        edgeDecApSimulation.startSimulation();
 
-        if(FogDecApSimulation.results.size() > 0) {
-            Float current = FogDecApSimulation.results.get(0);
-            for(int i = 1; i < FogDecApSimulation.results.size(); i++) {
-                assertThat(FogDecApSimulation.results.get(i), lessThanOrEqualTo(current + 0.1F));
-                current = FogDecApSimulation.results.get(i);
+        if(EdgeDecApSimulation.results.size() > 0) {
+            Float current = EdgeDecApSimulation.results.get(0);
+            for(int i = 1; i < EdgeDecApSimulation.results.size(); i++) {
+                assertThat(EdgeDecApSimulation.results.get(i), lessThanOrEqualTo(current + 0.1F));
+                current = EdgeDecApSimulation.results.get(i);
             }
         }
     }
 
     @Test
-    void testFogDecApWithGlobalHopDomainPolicy() {
+    void testEdgeDecApWithGlobalHopDomainPolicy() {
 
-        // SIMULATION OF THE FogDecAp ALGORITHM GLOBAL DOMAIN
+        // SIMULATION OF THE EdgeDecAp ALGORITHM GLOBAL DOMAIN
         DomainPolicy domainPolicy = new GlobalDomainPolicy();
-        Simulation fogDecApSimulation = new FogDecApSimulation()
+        Simulation edgeDecApSimulation = new EdgeDecApSimulation()
                 .isBeingDebugged(false)
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
-        fogDecApSimulation.prepareSimulation();
-        fogDecApSimulation.startSimulation();
+        edgeDecApSimulation.prepareSimulation();
+        edgeDecApSimulation.startSimulation();
 
-        if(FogDecApSimulation.results.size() > 0) {
-            Float current = FogDecApSimulation.results.get(0);
-            for(int i = 1; i < FogDecApSimulation.results.size(); i++) {
-                assertThat(FogDecApSimulation.results.get(i), lessThanOrEqualTo(current + 0.1F));
-                current = FogDecApSimulation.results.get(i);
+        if(EdgeDecApSimulation.results.size() > 0) {
+            Float current = EdgeDecApSimulation.results.get(0);
+            for(int i = 1; i < EdgeDecApSimulation.results.size(); i++) {
+                assertThat(EdgeDecApSimulation.results.get(i), lessThanOrEqualTo(current + 0.1F));
+                current = EdgeDecApSimulation.results.get(i);
             }
         }
     }

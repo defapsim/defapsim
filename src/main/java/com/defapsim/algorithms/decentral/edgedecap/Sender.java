@@ -1,4 +1,4 @@
-package com.defapsim.algorithms.decentral.fogdecap;
+package com.defapsim.algorithms.decentral.edgedecap;
 
 /**
  * Used to group auctioneer and bidder when sending messages

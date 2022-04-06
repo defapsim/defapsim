@@ -1,15 +1,15 @@
 # DeFAPSim
 
 DeFAPSim is a simulator, which was developed with the aim to evaluate decentralized algorithms for solving the Fog Application Placement Problem (FAPP).
-The implementation was done as part of the work "FogDecAp: An auction-based decentralized algorithm for optimizing application placement in fog computing" by Sven Smolka, Leon Wißenberg and Zoltán Ádám Mann. 
-In this work, the FogDecAp algorithm was presented, which is based on the DecAp algorithm of Malek et al. [[1]](#1).
-FogDecAp extends the DecAp algorithm to handle devices with different computing capacity and processing speed, as well as to account for the impact of end devices.
+The implementation was done as part of the work "EdgeDecAp: An auction-based decentralized algorithm for optimizing application placement in edge computing" by Sven Smolka, Leon Wißenberg and Zoltán Ádám Mann. 
+In this work, the EdgeDecAp algorithm was presented, which is based on the DecAp algorithm of Malek et al. [[1]](#1).
+EdgeDecAp extends the DecAp algorithm to handle devices with different computing capacity and processing speed, as well as to account for the impact of end devices.
 Also, some optimizations were made to further improve the performance of the algorithm.
-The FogDecAp algorithm was implemented in DeFAPSim along with another decentralized state-of-the-art algorithm by Guerrero et al. [[2]](#2) (which we refer to as LDSPP) and a centralized cloud only placement algorithm. 
+The EdgeDecAp algorithm was implemented in DeFAPSim along with another decentralized state-of-the-art algorithm by Guerrero et al. [[2]](#2) (which we refer to as LDSPP) and a centralized cloud only placement algorithm. 
 The following is a brief summary of the main features of the simulator.
 
 ## Infrastructure
-In DeFAPSim, the infrastructure consists of cloud servers, fog nodes and end devices.
+In DeFAPSim, the infrastructure consists of cloud servers, edge nodes and end devices.
 The simulator provides the possibility to characterize devices with a processing speed and set their capacities in terms of memory and computing power. 
 Also, (directed and undirected) links, which are characterized by a latency, exist between devices.
 Accordingly, the infrastructure can be modeled as a directed and undirected graph. 

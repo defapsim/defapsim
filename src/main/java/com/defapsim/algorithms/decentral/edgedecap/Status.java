@@ -1,4 +1,4 @@
-package com.defapsim.algorithms.decentral.fogdecap;
+package com.defapsim.algorithms.decentral.edgedecap;
 
 /**
  * The status that the devices can have

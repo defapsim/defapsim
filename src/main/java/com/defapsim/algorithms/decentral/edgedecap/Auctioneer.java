@@ -1,4 +1,4 @@
-package com.defapsim.algorithms.decentral.fogdecap;
+package com.defapsim.algorithms.decentral.edgedecap;
 
 import com.defapsim.algorithms.PlacementAlgorithm;
 import com.defapsim.application.Component;
@@ -8,28 +8,28 @@ import com.defapsim.evaluation.Evaluation;
 import com.defapsim.exceptions.InvalidAlgorithmParameterException;
 import com.defapsim.infrastructure.devices.ApplicationHostDevice;
 import com.defapsim.infrastructure.devices.clouddevice.CloudServer;
-import com.defapsim.infrastructure.devices.fognode.FogNode;
-import com.defapsim.misc.print.algorithm.FogDecApPrinter;
+import com.defapsim.infrastructure.devices.edgenode.EdgeNode;
+import com.defapsim.misc.print.algorithm.EdgeDecApPrinter;
 import com.defapsim.misc.Tupel;
-import com.defapsim.simulations.FogDecApSimulation;
+import com.defapsim.simulations.EdgeDecApSimulation;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * The Auctioneer is a part of the FogDecAp algorithm.
+ * The Auctioneer is a part of the EdgeDecAp algorithm.
  * It starts auctions for each individual component, which is placed on the auctioneer device,
  * whereby bidders are invited to the auctions.
  */
 
 public class Auctioneer extends PlacementAlgorithm implements Sender {
 
-    private FogDecApPrinter fogDecApPrinter = new FogDecApPrinter();
+    private EdgeDecApPrinter edgeDecApPrinter = new EdgeDecApPrinter();
 
     private Component componentToBeAuctioned;
     private ApplicationHostDevice host;
 
-    private FogDecApSimulation fogDecApSimulation;
+    private EdgeDecApSimulation edgeDecApSimulation;
     private Evaluation evaluation;
 
     public ApplicationHostDevice getHost(){
@@ -40,7 +40,7 @@ public class Auctioneer extends PlacementAlgorithm implements Sender {
     protected void castAlgorithmParameters(Object... algorithmParameters) {
         if(algorithmParameters == null ) throw new InvalidAlgorithmParameterException("algorithmParameters cannot be null");
 
-        if(!(algorithmParameters[0] instanceof FogDecApSimulation)) throw new InvalidAlgorithmParameterException("");
+        if(!(algorithmParameters[0] instanceof EdgeDecApSimulation)) throw new InvalidAlgorithmParameterException("");
 
         if(algorithmParameters.length == 2) {
             if(!(algorithmParameters[1] instanceof Evaluation)) {
@@ -49,7 +49,7 @@ public class Auctioneer extends PlacementAlgorithm implements Sender {
                 this.evaluation = (Evaluation) algorithmParameters[1];
             }
         }
-        this.fogDecApSimulation = (FogDecApSimulation) algorithmParameters[0];
+        this.edgeDecApSimulation = (EdgeDecApSimulation) algorithmParameters[0];
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Auctioneer extends PlacementAlgorithm implements Sender {
 
         this.host = (ApplicationHostDevice) this.algorithmInitDevice;
         List<ApplicationHostDevice> bidderDevice = this.host.getDevicesInDomain().stream()
-                .filter(o -> o instanceof CloudServer || o instanceof FogNode)
+                .filter(o -> o instanceof CloudServer || o instanceof EdgeNode)
                 .filter(o -> !o.equals(this.host))
                 .map(ApplicationHostDevice.class::cast)
                 .collect(Collectors.toList());
@@ -74,8 +74,8 @@ public class Auctioneer extends PlacementAlgorithm implements Sender {
         } */
 
 
-        if(this.fogDecApSimulation == null)
-            throw new RuntimeException("FogDecApSimulation cant be null");
+        if(this.edgeDecApSimulation == null)
+            throw new RuntimeException("EdgeDecApSimulation cant be null");
 
         List<Component> componentList = new LinkedList<>(this.host.getComponents());
 
@@ -86,8 +86,8 @@ public class Auctioneer extends PlacementAlgorithm implements Sender {
                 this.evaluation.withAmountOfAuctions(this.evaluation.getAmountOfAuctions() + 1);
             }
 
-            if(this.fogDecApSimulation.isBeingDebugged()) {
-                fogDecApPrinter.withComponentToBeAuctioned(this.componentToBeAuctioned).withHost(this.host);
+            if(this.edgeDecApSimulation.isBeingDebugged()) {
+                edgeDecApPrinter.withComponentToBeAuctioned(this.componentToBeAuctioned).withHost(this.host);
             }
 
             bidderDevice = bidderDevice.stream()
@@ -98,12 +98,12 @@ public class Auctioneer extends PlacementAlgorithm implements Sender {
 
 
             // Needed for testing purposes
-            FogDecApSimulation.results.add(this.componentToBeAuctioned.getComponentApplication().getApplicationLatency());
+            EdgeDecApSimulation.results.add(this.componentToBeAuctioned.getComponentApplication().getApplicationLatency());
 
-            Float maxBid = FogDecApFunctions.contribution(this.componentToBeAuctioned, this.host);
+            Float maxBid = EdgeDecApFunctions.contribution(this.componentToBeAuctioned, this.host);
 
-            if(this.fogDecApSimulation.isBeingDebugged()) {
-                fogDecApPrinter.withMaxbid(maxBid);
+            if(this.edgeDecApSimulation.isBeingDebugged()) {
+                edgeDecApPrinter.withMaxbid(maxBid);
             }
 
             // If the algorithm is intended to be executed in parallel, the "time1" has to be waited at this place.
@@ -117,28 +117,28 @@ public class Auctioneer extends PlacementAlgorithm implements Sender {
                 i--;
                 continue;
             }*/
-            FogDecApSimulation.statusMap.put(this.host, Status.AUCTIONING);
-            bidderDevice.forEach(o -> o.algorithm(FogDecApSimulation.bidderMap.get(o)).start(new Message(MessageType.AUCTION_INTENT, this)));
+            EdgeDecApSimulation.statusMap.put(this.host, Status.AUCTIONING);
+            bidderDevice.forEach(o -> o.algorithm(EdgeDecApSimulation.bidderMap.get(o)).start(new Message(MessageType.AUCTION_INTENT, this)));
 
             // If the algorithm is intended to be executed in parallel, the "time2" has to be waited at this place.
             // This means that the time in which the auctioneer is waiting for the bidders' AUCTION_ACCEPT answers has expired.
             List<Message> answers = new LinkedList<>();
-            bidderDevice.forEach(o -> answers.add(FogDecApSimulation.bidderMap.get(o).getAnswer()));
+            bidderDevice.forEach(o -> answers.add(EdgeDecApSimulation.bidderMap.get(o).getAnswer()));
 
             // This step checks if an AUCTION_CANCEL was sent by the bidder. This is not possible in a deterministic execution of the algorithm.
             /*if(answers.stream().filter(answer -> answer.getMessageType() == MessageType.AUCTION_ACCEPT).count() < bidderDevice.size()) {
                 bidderDevice.forEach(o -> o.algorithm(DecApSimulation.bidderMap.get(o)).start(new Message(MessageType.AUCTION_CANCEL, this)));
             }*/
 
-            bidderDevice.forEach(o -> o.algorithm(FogDecApSimulation.bidderMap.get(o)).start(new Message(MessageType.AUCTION_START, this, maxBid)));
+            bidderDevice.forEach(o -> o.algorithm(EdgeDecApSimulation.bidderMap.get(o)).start(new Message(MessageType.AUCTION_START, this, maxBid)));
 
             // If the algorithm is intended to be executed in parallel, the "time3" has to be waited at this place.
             // This means that the time in which the auctioneer is waiting for the bidders' answers has expired.
             answers.clear();
-            bidderDevice.forEach(o -> answers.add(FogDecApSimulation.bidderMap.get(o).getAnswer()));
+            bidderDevice.forEach(o -> answers.add(EdgeDecApSimulation.bidderMap.get(o).getAnswer()));
 
-            if(fogDecApSimulation.isBeingDebugged()) {
-                fogDecApPrinter.withAnswersAfterAuctionStart(answers);
+            if(edgeDecApSimulation.isBeingDebugged()) {
+                edgeDecApPrinter.withAnswersAfterAuctionStart(answers);
             }
 
             Map<Bidder, Float> fixedBids = new LinkedHashMap<>();
@@ -150,7 +150,7 @@ public class Auctioneer extends PlacementAlgorithm implements Sender {
                     // adjust bids
                     Map<Component,Float> bids = new LinkedHashMap<>();
                     tradeComponents.keySet().forEach(c_x -> {
-                        Float dif = FogDecApFunctions.calcDif(c_x, this.host, this.componentToBeAuctioned);
+                        Float dif = EdgeDecApFunctions.calcDif(c_x, this.host, this.componentToBeAuctioned);
                         if(this.host.getComponents().stream().filter(o -> !o.equals(this.componentToBeAuctioned))
                                 .noneMatch(component -> component.getComponentBlacklist().contains(c_x)) && !c_x.getHostBlacklist().contains(this.host))
                             bids.put(c_x, dif);
@@ -159,14 +159,14 @@ public class Auctioneer extends PlacementAlgorithm implements Sender {
                     });
                     Map.Entry<Component, Float> min = minimum(bids);
 
-                    if(fogDecApSimulation.isBeingDebugged()) {
-                        fogDecApPrinter.getBiddersBestTradableComponents().put(((Bidder)answer.getSender()), min.getKey());
+                    if(edgeDecApSimulation.isBeingDebugged()) {
+                        edgeDecApPrinter.getBiddersBestTradableComponents().put(((Bidder)answer.getSender()), min.getKey());
                     }
 
                     Float fixedBid = (Float)((Tupel) answer.getBody()).getAttributeA() + min.getValue();
 
-                    if(fogDecApSimulation.isBeingDebugged())
-                        fogDecApPrinter.getAdjustedgBiddersBid().put(((Bidder)answer.getSender()), fixedBid);
+                    if(edgeDecApSimulation.isBeingDebugged())
+                        edgeDecApPrinter.getAdjustedgBiddersBid().put(((Bidder)answer.getSender()), fixedBid);
 
                     fixedBids.put((Bidder) answer.getSender(), fixedBid);
                     tradeCandidate.put((Bidder) answer.getSender(), min.getKey());
@@ -180,10 +180,10 @@ public class Auctioneer extends PlacementAlgorithm implements Sender {
             Map.Entry<Bidder, Float> winner = minimum(fixedBids);
 
 
-            if(fogDecApSimulation.isBeingDebugged()) {
-                fogDecApPrinter.withFixedBids(fixedBids);
-                fogDecApPrinter.withTradeCandidate(tradeCandidate);
-                fogDecApPrinter.withWinner(winner);
+            if(edgeDecApSimulation.isBeingDebugged()) {
+                edgeDecApPrinter.withFixedBids(fixedBids);
+                edgeDecApPrinter.withTradeCandidate(tradeCandidate);
+                edgeDecApPrinter.withWinner(winner);
             }
 
 
@@ -203,17 +203,17 @@ public class Auctioneer extends PlacementAlgorithm implements Sender {
                     TradeRequest tradeRequest = new TradeRequest(componentToBeAuctioned, tradeCandidate.get(winner.getKey()));
                     tradeRequest.perform();
                 }
-                FogDecApSimulation.sweetSpotsDetermination.forEach((entry, value) -> FogDecApSimulation.sweetSpotsDetermination.put(entry, false));
+                EdgeDecApSimulation.sweetSpotsDetermination.forEach((entry, value) -> EdgeDecApSimulation.sweetSpotsDetermination.put(entry, false));
             } else {
-                FogDecApSimulation.sweetSpotsDetermination.put(componentToBeAuctioned, true);
+                EdgeDecApSimulation.sweetSpotsDetermination.put(componentToBeAuctioned, true);
             }
 
-            FogDecApSimulation.results.add(this.componentToBeAuctioned.getComponentApplication().getApplicationLatency());
-            bidderDevice.forEach(o -> FogDecApSimulation.bidderMap.get(o).start(new Message(MessageType.AUCTION_TERMINATION, this)));
-            FogDecApSimulation.statusMap.put(this.host, Status.FREE);
+            EdgeDecApSimulation.results.add(this.componentToBeAuctioned.getComponentApplication().getApplicationLatency());
+            bidderDevice.forEach(o -> EdgeDecApSimulation.bidderMap.get(o).start(new Message(MessageType.AUCTION_TERMINATION, this)));
+            EdgeDecApSimulation.statusMap.put(this.host, Status.FREE);
 
-            if(fogDecApSimulation.isBeingDebugged())
-                fogDecApPrinter.print();
+            if(edgeDecApSimulation.isBeingDebugged())
+                edgeDecApPrinter.print();
         }
     }
 

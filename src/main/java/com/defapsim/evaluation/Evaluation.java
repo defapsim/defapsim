@@ -38,9 +38,9 @@ public class Evaluation {
     private Integer cloudServers = 0;
 
     /**
-     * The number of used fog nodes
+     * The number of used edge nodes
      */
-    private Integer fogNodes = 0;
+    private Integer edgeNodes = 0;
 
     /**
      * The number of used end devices
@@ -94,8 +94,8 @@ public class Evaluation {
         return this.cloudServers;
     }
 
-    public Integer getFogNodes() {
-        return this.fogNodes;
+    public Integer getEdgeNodes() {
+        return this.edgeNodes;
     }
 
     public Integer getEndDevices() {
@@ -164,8 +164,8 @@ public class Evaluation {
         return this;
     }
 
-    public Evaluation withFogNodes(Integer fogNodes) {
-        this.fogNodes = fogNodes;
+    public Evaluation withEdgeNodes(Integer edgeNodes) {
+        this.edgeNodes = edgeNodes;
         return this;
     }
 

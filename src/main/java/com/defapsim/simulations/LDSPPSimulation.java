@@ -10,7 +10,7 @@ import com.defapsim.infrastructure.devices.ApplicationHostDevice;
 import com.defapsim.infrastructure.devices.Device;
 import com.defapsim.infrastructure.devices.clouddevice.CloudServer;
 import com.defapsim.infrastructure.devices.enddevice.EndDevice;
-import com.defapsim.infrastructure.devices.fognode.FogNode;
+import com.defapsim.infrastructure.devices.edgenode.EdgeNode;
 import com.defapsim.infrastructure.links.Link;
 import com.defapsim.misc.print.ConsoleFormatter;
 import com.defapsim.misc.print.InfrastructurePrinter;
@@ -72,7 +72,7 @@ public class LDSPPSimulation extends Simulation {
         if(this.evaluation != null) {
             this.evaluation.withApplicationComponents(this.applications.get(0).getComponents().size());
             this.evaluation.withCloudServers((int) this.infrastructure.getDevices().stream().filter(o -> o instanceof CloudServer).count());
-            this.evaluation.withFogNodes((int) this.infrastructure.getDevices().stream().filter(o -> o instanceof FogNode).count());
+            this.evaluation.withEdgeNodes((int) this.infrastructure.getDevices().stream().filter(o -> o instanceof EdgeNode).count());
             this.evaluation.withEndDevices((int) this.infrastructure.getDevices().stream().filter(o -> o instanceof EndDevice).count());
             this.evaluation.withApplicationLatencyInitial(applications.get(0).getApplicationLatency());
         }

@@ -9,7 +9,7 @@ import com.defapsim.infrastructure.devices.DeviceConfiguration;
 import com.defapsim.infrastructure.devices.DeviceCreator;
 import com.defapsim.infrastructure.devices.enddevice.EndDevice;
 import com.defapsim.infrastructure.devices.enddevice.EndDeviceCreator;
-import com.defapsim.infrastructure.devices.fognode.FogNodeCreator;
+import com.defapsim.infrastructure.devices.edgenode.EdgeNodeCreator;
 import com.defapsim.infrastructure.links.Link;
 import com.defapsim.infrastructure.links.LinkConfiguration;
 import com.defapsim.misc.Tupel;
@@ -29,7 +29,7 @@ public class Fire_IoT_Application {
     public static Tupel getSimulationConfigurationTupel() {
 
         final DeviceCreator endDeviceCreator = new EndDeviceCreator();
-        final FogNodeCreator fogNodeCreator = new FogNodeCreator();
+        final EdgeNodeCreator edgeNodeCreator = new EdgeNodeCreator();
         final CloudServerCreator cloudServerCreator = new CloudServerCreator();
 
         Infrastructure infrastructure = new Infrastructure("INFRASTRUCTURE");
@@ -43,33 +43,33 @@ public class Fire_IoT_Application {
         Device end_device_3 = endDeviceCreator.register(deviceConfiguration.withIdentifier("end-device 3"));
         Device end_device_4 = endDeviceCreator.register(deviceConfiguration.withIdentifier("end-device 4"));
 
-        // Create three fog nodes
-        Device fog_node_1 = fogNodeCreator.register(deviceConfiguration.withIdentifier("fog-node 1").withMemory(2.F).withComputingPower(2.F).withProcessingSpeed(1.33F));
-        Device fog_node_2 = fogNodeCreator.register(deviceConfiguration.withIdentifier("fog-node 2").withMemory(4.F).withComputingPower(1.F).withProcessingSpeed(1.46F));
-        Device fog_node_3 = fogNodeCreator.register(deviceConfiguration.withIdentifier("fog-node 3").withMemory(10.F).withComputingPower(2.F).withProcessingSpeed(1.33F));
+        // Create three edge nodes
+        Device edge_node_1 = edgeNodeCreator.register(deviceConfiguration.withIdentifier("edge-node 1").withMemory(2.F).withComputingPower(2.F).withProcessingSpeed(1.33F));
+        Device edge_node_2 = edgeNodeCreator.register(deviceConfiguration.withIdentifier("edge-node 2").withMemory(4.F).withComputingPower(1.F).withProcessingSpeed(1.46F));
+        Device edge_node_3 = edgeNodeCreator.register(deviceConfiguration.withIdentifier("edge-node 3").withMemory(10.F).withComputingPower(2.F).withProcessingSpeed(1.33F));
 
         // Create two cloud servers
         Device cloud_server_1 = cloudServerCreator.register(deviceConfiguration.withIdentifier("cloud-server-1").withMemory(Float.MAX_VALUE).withComputingPower(Float.MAX_VALUE).withProcessingSpeed(2.5F));
         Device cloud_server_2 = cloudServerCreator.register(deviceConfiguration.withIdentifier("cloud-server-2").withMemory(Float.MAX_VALUE).withComputingPower(Float.MAX_VALUE).withProcessingSpeed(3.0F));
 
-        // Links: End devices to fog nodes
-        Link.addUndirected(new LinkConfiguration().from(end_device_1).to(fog_node_1).withNameToFrom("LINK-1").withNameFromTo("LINK-1").withLatencyFromTo(0.F).withLatencyToFrom(0.F));
-        Link.addUndirected(new LinkConfiguration().from(end_device_2).to(fog_node_1).withNameToFrom("LINK-2").withNameFromTo("LINK-2").withLatencyFromTo(0.F).withLatencyToFrom(0.F));
-        Link.addUndirected(new LinkConfiguration().from(end_device_3).to(fog_node_2).withNameToFrom("LINK-3").withNameFromTo("LINK-3").withLatencyFromTo(0.F).withLatencyToFrom(0.F));
-        Link.addUndirected(new LinkConfiguration().from(end_device_4).to(fog_node_2).withNameToFrom("LINK-4").withNameFromTo("LINK-4").withLatencyFromTo(0.F).withLatencyToFrom(0.F));
+        // Links: End devices to edge nodes
+        Link.addUndirected(new LinkConfiguration().from(end_device_1).to(edge_node_1).withNameToFrom("LINK-1").withNameFromTo("LINK-1").withLatencyFromTo(0.F).withLatencyToFrom(0.F));
+        Link.addUndirected(new LinkConfiguration().from(end_device_2).to(edge_node_1).withNameToFrom("LINK-2").withNameFromTo("LINK-2").withLatencyFromTo(0.F).withLatencyToFrom(0.F));
+        Link.addUndirected(new LinkConfiguration().from(end_device_3).to(edge_node_2).withNameToFrom("LINK-3").withNameFromTo("LINK-3").withLatencyFromTo(0.F).withLatencyToFrom(0.F));
+        Link.addUndirected(new LinkConfiguration().from(end_device_4).to(edge_node_2).withNameToFrom("LINK-4").withNameFromTo("LINK-4").withLatencyFromTo(0.F).withLatencyToFrom(0.F));
 
-        // Links: Fog nodes to fog nodes
-        Link.addUndirected(new LinkConfiguration().from(fog_node_1).to(fog_node_2).withNameToFrom("LINK-5").withNameFromTo("LINK-5").withLatencyFromTo(1.F).withLatencyToFrom(1.F));
-        Link.addUndirected(new LinkConfiguration().from(fog_node_1).to(fog_node_3).withNameToFrom("LINK-6").withNameFromTo("LINK-6").withLatencyFromTo(5.F).withLatencyToFrom(5.F));
-        Link.addUndirected(new LinkConfiguration().from(fog_node_2).to(fog_node_3).withNameToFrom("LINK-7").withNameFromTo("LINK-7").withLatencyFromTo(5.F).withLatencyToFrom(5.F));
+        // Links: Edge nodes to edge nodes
+        Link.addUndirected(new LinkConfiguration().from(edge_node_1).to(edge_node_2).withNameToFrom("LINK-5").withNameFromTo("LINK-5").withLatencyFromTo(1.F).withLatencyToFrom(1.F));
+        Link.addUndirected(new LinkConfiguration().from(edge_node_1).to(edge_node_3).withNameToFrom("LINK-6").withNameFromTo("LINK-6").withLatencyFromTo(5.F).withLatencyToFrom(5.F));
+        Link.addUndirected(new LinkConfiguration().from(edge_node_2).to(edge_node_3).withNameToFrom("LINK-7").withNameFromTo("LINK-7").withLatencyFromTo(5.F).withLatencyToFrom(5.F));
 
-        // Links: Fog nodes to cloud
-        Link.addUndirected(new LinkConfiguration().from(fog_node_1).to(cloud_server_1).withNameToFrom("LINK-8").withNameFromTo("LINK-8").withLatencyFromTo(130.F).withLatencyToFrom(130.F));
-        Link.addUndirected(new LinkConfiguration().from(fog_node_2).to(cloud_server_1).withNameToFrom("LINK-9").withNameFromTo("LINK-9").withLatencyFromTo(100.F).withLatencyToFrom(100.F));
-        Link.addUndirected(new LinkConfiguration().from(fog_node_3).to(cloud_server_1).withNameToFrom("LINK-10").withNameFromTo("LINK-10").withLatencyFromTo(35.F).withLatencyToFrom(35.F));
-        Link.addUndirected(new LinkConfiguration().from(fog_node_1).to(cloud_server_2).withNameToFrom("LINK-11").withNameFromTo("LINK-11").withLatencyFromTo(200.F).withLatencyToFrom(200.F));
-        Link.addUndirected(new LinkConfiguration().from(fog_node_2).to(cloud_server_2).withNameToFrom("LINK-12").withNameFromTo("LINK-12").withLatencyFromTo(180.F).withLatencyToFrom(180.F));
-        Link.addUndirected(new LinkConfiguration().from(fog_node_3).to(cloud_server_2).withNameToFrom("LINK-13").withNameFromTo("LINK-13").withLatencyFromTo(45.F).withLatencyToFrom(45.F));
+        // Links: Edge nodes to cloud
+        Link.addUndirected(new LinkConfiguration().from(edge_node_1).to(cloud_server_1).withNameToFrom("LINK-8").withNameFromTo("LINK-8").withLatencyFromTo(130.F).withLatencyToFrom(130.F));
+        Link.addUndirected(new LinkConfiguration().from(edge_node_2).to(cloud_server_1).withNameToFrom("LINK-9").withNameFromTo("LINK-9").withLatencyFromTo(100.F).withLatencyToFrom(100.F));
+        Link.addUndirected(new LinkConfiguration().from(edge_node_3).to(cloud_server_1).withNameToFrom("LINK-10").withNameFromTo("LINK-10").withLatencyFromTo(35.F).withLatencyToFrom(35.F));
+        Link.addUndirected(new LinkConfiguration().from(edge_node_1).to(cloud_server_2).withNameToFrom("LINK-11").withNameFromTo("LINK-11").withLatencyFromTo(200.F).withLatencyToFrom(200.F));
+        Link.addUndirected(new LinkConfiguration().from(edge_node_2).to(cloud_server_2).withNameToFrom("LINK-12").withNameFromTo("LINK-12").withLatencyFromTo(180.F).withLatencyToFrom(180.F));
+        Link.addUndirected(new LinkConfiguration().from(edge_node_3).to(cloud_server_2).withNameToFrom("LINK-13").withNameFromTo("LINK-13").withLatencyFromTo(45.F).withLatencyToFrom(45.F));
 
         // Resolve the routes between the devices in the infrastructure.
         infrastructure.resolveRoutes();
@@ -87,15 +87,15 @@ public class Fire_IoT_Application {
         application.withComponent(fire_manager).withComponent(insights_backend).withComponent(machine_learning_engine);
 
         // Set location restrictions for the components
-        insights_backend.addHostToBlacklist((ApplicationHostDevice) fog_node_1);
-        insights_backend.addHostToBlacklist((ApplicationHostDevice) fog_node_2);
+        insights_backend.addHostToBlacklist((ApplicationHostDevice) edge_node_1);
+        insights_backend.addHostToBlacklist((ApplicationHostDevice) edge_node_2);
         insights_backend.addHostToBlacklist((ApplicationHostDevice) cloud_server_1);
 
-        fire_manager.addHostToBlacklist((ApplicationHostDevice) fog_node_3);
+        fire_manager.addHostToBlacklist((ApplicationHostDevice) edge_node_3);
         fire_manager.addHostToBlacklist((ApplicationHostDevice) cloud_server_1);
 
-        machine_learning_engine.addHostToBlacklist((ApplicationHostDevice) fog_node_1);
-        machine_learning_engine.addHostToBlacklist((ApplicationHostDevice) fog_node_2);
+        machine_learning_engine.addHostToBlacklist((ApplicationHostDevice) edge_node_1);
+        machine_learning_engine.addHostToBlacklist((ApplicationHostDevice) edge_node_2);
 
         // Create connectors between components
         Connector.addUndirected(new ConnectorConfiguration<Component, Component>().from(fire_manager).to(insights_backend)

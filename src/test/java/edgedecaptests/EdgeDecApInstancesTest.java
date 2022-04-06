@@ -1,4 +1,4 @@
-package fogdecaptests;
+package edgedecaptests;
 
 import com.defapsim.application.Application;
 import com.defapsim.application.Component;
@@ -10,7 +10,7 @@ import com.defapsim.policies.domain.DomainPolicy;
 import com.defapsim.policies.domain.HopDomainPolicy;
 import com.defapsim.policies.initialplacement.InitialPlacementPolicy;
 import com.defapsim.policies.initialplacement.RandomInitialPlacementPolicy;
-import com.defapsim.simulations.FogDecApSimulation;
+import com.defapsim.simulations.EdgeDecApSimulation;
 import com.defapsim.simulations.Simulation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,13 +21,13 @@ import static org.hamcrest.Matchers.hasItems;
 
 /**
  * In the following, six test cases are run through.
- * The FogDecAp algorithm is always executed on the same infrastructure.
+ * The EdgeDecAp algorithm is always executed on the same infrastructure.
  * The infrastructure and application was taken from Brogi et al (see
  * com.defapsim.examples.simulationconfiguration.literature.Fire_IoT_Application).
  * Only the initial placement of the components differs in each of the six tests.
  */
 
-public class FogDecApInstancesTest {
+public class EdgeDecApInstancesTest {
 
     public static DomainPolicy domainPolicy = new HopDomainPolicy().withHops(2);
 
@@ -36,9 +36,9 @@ public class FogDecApInstancesTest {
     public static InitialPlacementPolicy initialPlacementPolicy;
     public static Float applicationLatency;
 
-    public static ApplicationHostDevice fogNode1;
-    public static ApplicationHostDevice fogNode2;
-    public static ApplicationHostDevice fogNode3;
+    public static ApplicationHostDevice edgeNode1;
+    public static ApplicationHostDevice edgeNode2;
+    public static ApplicationHostDevice edgeNode3;
     public static ApplicationHostDevice cloudServer1;
     public static ApplicationHostDevice cloudServer2;
 
@@ -53,9 +53,9 @@ public class FogDecApInstancesTest {
         infrastructure          = (Infrastructure) tupel.getAttributeA();
         application             = (Application) tupel.getAttributeB();
 
-        fogNode1                = (ApplicationHostDevice) infrastructure.getDevices().get(4);
-        fogNode2                = (ApplicationHostDevice) infrastructure.getDevices().get(5);
-        fogNode3                = (ApplicationHostDevice) infrastructure.getDevices().get(6);
+        edgeNode1 = (ApplicationHostDevice) infrastructure.getDevices().get(4);
+        edgeNode2 = (ApplicationHostDevice) infrastructure.getDevices().get(5);
+        edgeNode3 = (ApplicationHostDevice) infrastructure.getDevices().get(6);
         cloudServer1            = (ApplicationHostDevice) infrastructure.getDevices().get(7);
         cloudServer2            = (ApplicationHostDevice) infrastructure.getDevices().get(8);
 
@@ -72,119 +72,119 @@ public class FogDecApInstancesTest {
      *  FIRE_MANAGER                is placed on on     cloud server 2
      */
     @Test
-    void testSimulationInstanceFogDecAp_C2C2C2() {
+    void testSimulationInstanceEdgeDecAp_C2C2C2() {
         initialPlacementPolicy = new RandomInitialPlacementPolicy().withSeed(424);
-        Simulation fogDecApSimulation = new FogDecApSimulation()
+        Simulation EdgeDecApSimulation = new EdgeDecApSimulation()
                 .isBeingDebugged(true)
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
 
-        fogDecApSimulation.prepareSimulation();
+        EdgeDecApSimulation.prepareSimulation();
         applicationLatency = application.getApplicationLatency();
 
-        fogDecApSimulation.startSimulation();
+        EdgeDecApSimulation.startSimulation();
 
-        assertThat(fogNode1.getComponents(), hasItem(fire_manager));
+        assertThat(edgeNode1.getComponents(), hasItem(fire_manager));
         assertThat(cloudServer2.getComponents(), hasItems(insights_backend, machine_learning_engine));
     }
 
     /**
      * Test with the following initial placement for the components:
      *  MACHINE_LEARNING_ENGINE     is placed on on     cloud server 1
-     *  INSIGHTS_BACKEND            is placed on on     fog node 3
+     *  INSIGHTS_BACKEND            is placed on on     edge node 3
      *  FIRE_MANAGER                is placed on on     cloud server 2
      */
     @Test
-    void testSimulationInstanceFogDecAp_C1F3C2() {
+    void testSimulationInstanceEdgeDecAp_C1F3C2() {
         initialPlacementPolicy = new RandomInitialPlacementPolicy().withSeed(72696568);
-        Simulation fogDecApSimulation = new FogDecApSimulation()
+        Simulation EdgeDecApSimulation = new EdgeDecApSimulation()
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
 
-        fogDecApSimulation.prepareSimulation();
+        EdgeDecApSimulation.prepareSimulation();
         applicationLatency = application.getApplicationLatency();
 
-        fogDecApSimulation.startSimulation();
+        EdgeDecApSimulation.startSimulation();
 
-        assertThat(fogNode1.getComponents(), hasItem(fire_manager));
+        assertThat(edgeNode1.getComponents(), hasItem(fire_manager));
         assertThat(cloudServer2.getComponents(), hasItems(insights_backend, machine_learning_engine));
     }
 
     /**
      * Test with the following initial placement for the components:
      *  MACHINE_LEARNING_ENGINE     is placed on on     cloud server 1
-     *  INSIGHTS_BACKEND            is placed on on     fog node 3
-     *  FIRE_MANAGER                is placed on on     fog node 2
+     *  INSIGHTS_BACKEND            is placed on on     edge node 3
+     *  FIRE_MANAGER                is placed on on     edge node 2
      */
     @Test
-    void testSimulationInstanceFogDecAp_C1F3F2() {
+    void testSimulationInstanceEdgeDecAp_C1F3F2() {
         initialPlacementPolicy = new RandomInitialPlacementPolicy().withSeed(10611798);
-        Simulation fogDecApSimulation = new FogDecApSimulation()
+        Simulation EdgeDecApSimulation = new EdgeDecApSimulation()
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
 
-        fogDecApSimulation.prepareSimulation();
+        EdgeDecApSimulation.prepareSimulation();
         applicationLatency = application.getApplicationLatency();
 
-        fogDecApSimulation.startSimulation();
+        EdgeDecApSimulation.startSimulation();
 
-        assertThat(fogNode1.getComponents(), hasItem(fire_manager));
-        assertThat(fogNode3.getComponents(), hasItem(insights_backend));
+        assertThat(edgeNode1.getComponents(), hasItem(fire_manager));
+        assertThat(edgeNode3.getComponents(), hasItem(insights_backend));
         assertThat(cloudServer1.getComponents(), hasItem(machine_learning_engine));
     }
 
     /**
      * Test with the following initial placement for the components:
-     *  MACHINE_LEARNING_ENGINE     is placed on on     fog node 3
+     *  MACHINE_LEARNING_ENGINE     is placed on on     edge node 3
      *  INSIGHTS_BACKEND            is placed on on     cloud server 2
-     *  FIRE_MANAGER                is placed on on     fog node 1
+     *  FIRE_MANAGER                is placed on on     edge node 1
      */
     @Test
-    void testSimulationInstanceFogDecAp_F3C2F1() {
+    void testSimulationInstanceEdgeDecAp_F3C2F1() {
         initialPlacementPolicy = new RandomInitialPlacementPolicy().withSeed(98106);
-        Simulation fogDecApSimulation = new FogDecApSimulation()
+        Simulation EdgeDecApSimulation = new EdgeDecApSimulation()
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
 
-        fogDecApSimulation.prepareSimulation();
+        EdgeDecApSimulation.prepareSimulation();
         applicationLatency = application.getApplicationLatency();
 
-        fogDecApSimulation.startSimulation();
+        EdgeDecApSimulation.startSimulation();
 
-        assertThat(fogNode1.getComponents(), hasItem(fire_manager));
+        assertThat(edgeNode1.getComponents(), hasItem(fire_manager));
         assertThat(cloudServer2.getComponents(), hasItems(insights_backend, machine_learning_engine));
     }
 
     /**
      * Test with the following initial placement for the components:
      *  MACHINE_LEARNING_ENGINE     is placed on on     cloud server 1
-     *  INSIGHTS_BACKEND            is placed on on     fog node 3
-     *  FIRE_MANAGER                is placed on on     fog node 1
+     *  INSIGHTS_BACKEND            is placed on on     edge node 3
+     *  FIRE_MANAGER                is placed on on     edge node 1
      */
     @Test
-    void testSimulationInstanceFogDecAp_C1F3F1() {
+    void testSimulationInstanceEdgeDecAp_C1F3F1() {
         initialPlacementPolicy = new RandomInitialPlacementPolicy().withSeed(708268);
-        Simulation fogDecApSimulation = new FogDecApSimulation()
+        Simulation EdgeDecApSimulation = new EdgeDecApSimulation()
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
 
-        fogDecApSimulation.prepareSimulation();
+        EdgeDecApSimulation.prepareSimulation();
         applicationLatency = application.getApplicationLatency();
 
-        fogDecApSimulation.startSimulation();
+        EdgeDecApSimulation.startSimulation();
 
-        assertThat(fogNode1.getComponents(), hasItem(fire_manager));
-        assertThat(fogNode3.getComponents(), hasItem(insights_backend));
+        assertThat(edgeNode1.getComponents(), hasItem(fire_manager));
+        assertThat(edgeNode3.getComponents(), hasItem(insights_backend));
         assertThat(cloudServer1.getComponents(), hasItem(machine_learning_engine));
     }
 
@@ -192,23 +192,23 @@ public class FogDecApInstancesTest {
      * Test with the following initial placement for the components:
      *  MACHINE_LEARNING_ENGINE     is placed on on     cloud server 1
      *  INSIGHTS_BACKEND            is placed on on     cloud server 2
-     *  FIRE_MANAGER                is placed on on     fog node 2
+     *  FIRE_MANAGER                is placed on on     edge node 2
      */
     @Test
-    void testSimulationInstanceFogDecAp_C1C2F2() {
+    void testSimulationInstanceEdgeDecAp_C1C2F2() {
         initialPlacementPolicy = new RandomInitialPlacementPolicy().withSeed(535);
-        Simulation fogDecApSimulation = new FogDecApSimulation()
+        Simulation EdgeDecApSimulation = new EdgeDecApSimulation()
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
 
-        fogDecApSimulation.prepareSimulation();
+        EdgeDecApSimulation.prepareSimulation();
         applicationLatency = application.getApplicationLatency();
 
-        fogDecApSimulation.startSimulation();
+        EdgeDecApSimulation.startSimulation();
 
-        assertThat(fogNode1.getComponents(), hasItem(fire_manager));
+        assertThat(edgeNode1.getComponents(), hasItem(fire_manager));
         assertThat(cloudServer2.getComponents(), hasItems(insights_backend, machine_learning_engine));
     }
 }

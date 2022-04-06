@@ -1,7 +1,7 @@
 package com.defapsim.misc.print.algorithm;
 
-import com.defapsim.algorithms.decentral.fogdecap.Bidder;
-import com.defapsim.algorithms.decentral.fogdecap.Message;
+import com.defapsim.algorithms.decentral.edgedecap.Bidder;
+import com.defapsim.algorithms.decentral.edgedecap.Message;
 import com.defapsim.application.Component;
 import com.defapsim.infrastructure.devices.ApplicationHostDevice;
 import com.defapsim.misc.Tupel;
@@ -11,9 +11,9 @@ import com.defapsim.misc.print.Printer;
 import java.util.*;
 
 /**
- * An individual printer for the FogDecAp algorithm
+ * An individual printer for the EdgeDecAp algorithm
  */
-public class FogDecApPrinter implements Printer {
+public class EdgeDecApPrinter implements Printer {
 
     private int columns = 3 + 1;
 
@@ -39,42 +39,42 @@ public class FogDecApPrinter implements Printer {
     private Map<Bidder, Component> tradeCandidate;
     private Map.Entry<Bidder, Float> winner;
 
-    public FogDecApPrinter withComponentToBeAuctioned(Component componentToBeAuctioned) {
+    public EdgeDecApPrinter withComponentToBeAuctioned(Component componentToBeAuctioned) {
         this.componentToBeAuctioned = componentToBeAuctioned;
         return this;
     }
 
-    public FogDecApPrinter withHost(ApplicationHostDevice host) {
+    public EdgeDecApPrinter withHost(ApplicationHostDevice host) {
         this.host = host;
         return this;
     }
 
-    public FogDecApPrinter withMaxbid(Float maxBid) {
+    public EdgeDecApPrinter withMaxbid(Float maxBid) {
         this.maxBid = maxBid;
         return this;
     }
 
-    public FogDecApPrinter withAnswersAfterAuctionStart(List<Message> answersAfterAuctionStart) {
+    public EdgeDecApPrinter withAnswersAfterAuctionStart(List<Message> answersAfterAuctionStart) {
         this.answersAfterAuctionStart = answersAfterAuctionStart;
         return this;
     }
 
-    public FogDecApPrinter withFixedBids(Map<Bidder, Float> fixedBids) {
+    public EdgeDecApPrinter withFixedBids(Map<Bidder, Float> fixedBids) {
         this.fixedBids = fixedBids;
         return this;
     }
 
-    public FogDecApPrinter withTradeCandidate(Map<Bidder, Component> tradeCandidate) {
+    public EdgeDecApPrinter withTradeCandidate(Map<Bidder, Component> tradeCandidate) {
         this.tradeCandidate = tradeCandidate;
         return this;
     }
 
-    public FogDecApPrinter withWinner(Map.Entry<Bidder, Float> winner) {
+    public EdgeDecApPrinter withWinner(Map.Entry<Bidder, Float> winner) {
         this.winner = winner;
         return this;
     }
 
-    public FogDecApPrinter print() {
+    public EdgeDecApPrinter print() {
         printHeadline();
         return this;
     }

@@ -12,7 +12,7 @@ import com.defapsim.policies.domain.HopDomainPolicy;
 import com.defapsim.policies.initialplacement.InitialPlacementPolicy;
 import com.defapsim.policies.initialplacement.RandomInitialPlacementPolicy;
 import com.defapsim.simulations.CloudOnlySimulation;
-import com.defapsim.simulations.FogDecApSimulation;
+import com.defapsim.simulations.EdgeDecApSimulation;
 import com.defapsim.simulations.LDSPPSimulation;
 import com.defapsim.simulations.Simulation;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -74,67 +74,67 @@ public class ProblemInstance5 {
         LDSPPSimulation.startSimulation();
 
 
-        // SIMULATION OF THE FogDecAp ALGORITHM 1 HOP DOMAIN
+        // SIMULATION OF THE EdgeDecAp ALGORITHM 1 HOP DOMAIN
         DomainPolicy domainPolicy = new HopDomainPolicy().withHops(1);
         infrastructure.resetInfrastructure();
-        Evaluation evaluationFogDecApAlgorithm1HopDomainPolicy = new Evaluation().withAlgorithmName("FogDecAp 1-Hop DP");
-        Simulation fogDecApSimulation1 = new FogDecApSimulation()
+        Evaluation evaluationEdgeDecApAlgorithm1HopDomainPolicy = new Evaluation().withAlgorithmName("EdgeDecAp 1-Hop DP");
+        Simulation EdgeDecApSimulation1 = new EdgeDecApSimulation()
                 .isBeingDebugged(false)
-                .withEvaluation(evaluationFogDecApAlgorithm1HopDomainPolicy)
+                .withEvaluation(evaluationEdgeDecApAlgorithm1HopDomainPolicy)
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
-        fogDecApSimulation1.prepareSimulation();
-        fogDecApSimulation1.startSimulation();
+        EdgeDecApSimulation1.prepareSimulation();
+        EdgeDecApSimulation1.startSimulation();
 
-        // SIMULATION OF THE FogDecAp ALGORITHM 2 HOP DOMAIN
+        // SIMULATION OF THE EdgeDecAp ALGORITHM 2 HOP DOMAIN
         domainPolicy = new HopDomainPolicy().withHops(2);
         infrastructure.resetInfrastructure();
-        Evaluation evaluationFogDecApAlgorithm2HopDomainPolicy = new Evaluation().withAlgorithmName("FogDecAp 2-Hop DP");
-        Simulation fogDecApSimulation2 = new FogDecApSimulation()
+        Evaluation evaluationEdgeDecApAlgorithm2HopDomainPolicy = new Evaluation().withAlgorithmName("EdgeDecAp 2-Hop DP");
+        Simulation EdgeDecApSimulation2 = new EdgeDecApSimulation()
                 .isBeingDebugged(false)
-                .withEvaluation(evaluationFogDecApAlgorithm2HopDomainPolicy)
+                .withEvaluation(evaluationEdgeDecApAlgorithm2HopDomainPolicy)
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
-        fogDecApSimulation2.prepareSimulation();
-        fogDecApSimulation2.startSimulation();
+        EdgeDecApSimulation2.prepareSimulation();
+        EdgeDecApSimulation2.startSimulation();
 
-        // SIMULATION OF THE FogDecAp ALGORITHM 3 HOP DOMAIN
+        // SIMULATION OF THE EdgeDecAp ALGORITHM 3 HOP DOMAIN
         domainPolicy = new HopDomainPolicy().withHops(3);
         infrastructure.resetInfrastructure();
-        Evaluation evaluationFogDecApAlgorithm3HopDomainPolicy = new Evaluation().withAlgorithmName("FogDecAp 3-Hop DP");
-        Simulation fogDecApSimulation3 = new FogDecApSimulation()
+        Evaluation evaluationEdgeDecApAlgorithm3HopDomainPolicy = new Evaluation().withAlgorithmName("EdgeDecAp 3-Hop DP");
+        Simulation EdgeDecApSimulation3 = new EdgeDecApSimulation()
                 .isBeingDebugged(false)
-                .withEvaluation(evaluationFogDecApAlgorithm3HopDomainPolicy)
+                .withEvaluation(evaluationEdgeDecApAlgorithm3HopDomainPolicy)
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
-        fogDecApSimulation3.prepareSimulation();
-        fogDecApSimulation3.startSimulation();
+        EdgeDecApSimulation3.prepareSimulation();
+        EdgeDecApSimulation3.startSimulation();
 
-        // SIMULATION OF THE FogDecAp ALGORITHM GLOBAL DOMAIN
+        // SIMULATION OF THE EdgeDecAp ALGORITHM GLOBAL DOMAIN
         domainPolicy = new GlobalDomainPolicy();
         infrastructure.resetInfrastructure();
-        Evaluation evaluationFogDecApAlgorithmGlobalDomainPolicy = new Evaluation().withAlgorithmName("FogDecAp Global DP");
-        Simulation fogDecApSimulationG = new FogDecApSimulation()
+        Evaluation evaluationEdgeDecApAlgorithmGlobalDomainPolicy = new Evaluation().withAlgorithmName("EdgeDecAp Global DP");
+        Simulation EdgeDecApSimulationG = new EdgeDecApSimulation()
                 .isBeingDebugged(false)
-                .withEvaluation(evaluationFogDecApAlgorithmGlobalDomainPolicy)
+                .withEvaluation(evaluationEdgeDecApAlgorithmGlobalDomainPolicy)
                 .withInfrastructure(infrastructure)
                 .withApplication(application)
                 .withDomainPolicy(domainPolicy)
                 .withInitialPlacementPolicy(initialPlacementPolicy);
-        fogDecApSimulationG.prepareSimulation();
-        fogDecApSimulationG.startSimulation();
+        EdgeDecApSimulationG.prepareSimulation();
+        EdgeDecApSimulationG.startSimulation();
 
         List<Evaluation> evaluationList = new LinkedList<>() {{
-            this.add(evaluationFogDecApAlgorithm1HopDomainPolicy);
-            this.add(evaluationFogDecApAlgorithm2HopDomainPolicy);
-            this.add(evaluationFogDecApAlgorithm3HopDomainPolicy);
-            this.add(evaluationFogDecApAlgorithmGlobalDomainPolicy);
+            this.add(evaluationEdgeDecApAlgorithm1HopDomainPolicy);
+            this.add(evaluationEdgeDecApAlgorithm2HopDomainPolicy);
+            this.add(evaluationEdgeDecApAlgorithm3HopDomainPolicy);
+            this.add(evaluationEdgeDecApAlgorithmGlobalDomainPolicy);
             this.add(evaluationLDSPP);
             this.add(evaluationCloudOnly);
         }};
@@ -144,7 +144,7 @@ public class ProblemInstance5 {
         System.out.println("Devices in infrastructure: " + infrastructure.getDevices().size());
         System.out.println("Total pops: " + (infrastructureGenerator.getPopID() - 1));
         System.out.println("Total homes: " + (infrastructureGenerator.getBoxID() - 1));
-        System.out.println("Total fog nodes: " + ( infrastructureGenerator.getBoxID() + infrastructureGenerator.getMobileID() + infrastructureGenerator.getPcID() - 3));
+        System.out.println("Total edge nodes: " + ( infrastructureGenerator.getBoxID() + infrastructureGenerator.getMobileID() + infrastructureGenerator.getPcID() - 3));
         System.out.println("Total end devices: " + (infrastructureGenerator.getCamID() + infrastructureGenerator.getScreenID() - 2));
         System.out.println("Total components: " + application.getComponents().size());
     }
